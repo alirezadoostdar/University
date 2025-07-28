@@ -7,3 +7,9 @@ public class Course
     public int Unit { get; set; }
 
 }
+
+public class Class
+{
+    public int Id { get; set; }
+    public int MyProperty { get; set; }
+}
