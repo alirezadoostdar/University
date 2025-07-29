@@ -7,9 +7,3 @@ public class Course
     public int Unit { get; set; }
 
 }
-
-public class Class
-{
-    public int Id { get; set; }
-    public int CourseId { get; set; }
-}
