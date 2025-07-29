@@ -96,6 +96,18 @@ public class _202507290959_Add_Initial : Migration
     }
     public override void Down()
     {
-        throw new NotImplementedException();
+        Delete.ForeignKey("Fk_ClassEnrollment_Student");
+        Delete.ForeignKey("Fk_ClassEnrollment_Class");
+        Delete.ForeignKey("Fk_ClassSchedule_Class");
+        Delete.ForeignKey("Fk_Class_Semester");
+        Delete.ForeignKey("Fk_Class_Teacher");
+        Delete.ForeignKey("Fk_Class_Course");
+        Delete.Table("ClassEnrollments");
+        Delete.Table("ClassSchedules");
+        Delete.Table("Classes");
+        Delete.Table("Semesters");
+        Delete.Table("Courses");
+        Delete.Table("Teachers");
+        Delete.Table("Students");
     }
 }
