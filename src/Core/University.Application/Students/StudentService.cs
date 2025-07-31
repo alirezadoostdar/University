@@ -7,10 +7,12 @@ namespace University.Application.Students;
 public class StudentService : IStudentService
 {
     private readonly IStudentRepository _studentRepository;
+    private readonly IUnitOfWork _uow;
 
-    public StudentService(IStudentRepository studentRepository)
+    public StudentService(IStudentRepository studentRepository, IUnitOfWork uow)
     {
         _studentRepository = studentRepository;
+        _uow = uow;
     }
 
     public int Add(AddStudentDto dto)
@@ -27,6 +29,7 @@ public class StudentService : IStudentService
         };
 
         _studentRepository.Add(student);
+        _uow.Save();
         return student.Id;
     }
 

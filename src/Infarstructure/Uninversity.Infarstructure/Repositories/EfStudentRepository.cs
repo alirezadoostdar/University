@@ -3,7 +3,7 @@ using University.Domain.Interfaces;
 
 namespace Uninversity.Infarstructure.Repositories;
 
-internal class EfStudentRepository : IStudentRepository
+public class EfStudentRepository : IStudentRepository
 {
     private readonly ApplicationDbContext _context;
 
