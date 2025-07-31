@@ -4,9 +4,9 @@ namespace University.Domain.Interfaces;
 
 public interface IStudentRepository
 {
-    Student GetById(int id);
+    Student? GetById(int id);
     List<Student> GetAll();
-    int Add(Student student);
+    void Add(Student student);
     void Update(Student student);
-    void Delete(int id);
+    void Delete(Student student);
 }

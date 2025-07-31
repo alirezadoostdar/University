@@ -5,35 +5,35 @@ namespace Uninversity.Infarstructure.Repositories;
 
 internal class EfStudentRepository : IStudentRepository
 {
-    private readonly IStudentRepository _studentRepository;
+    private readonly ApplicationDbContext _context;
 
-    public EfStudentRepository(IStudentRepository studentRepository)
+    public EfStudentRepository(ApplicationDbContext context)
     {
-        _studentRepository = studentRepository;
+        _context = context;
     }
 
-    public int Add(Student student)
+    public void Add(Student student)
     {
-        throw new NotImplementedException();
+        _context.Students.Add(student);
     }
 
-    public void Delete(int id)
+    public void Delete(Student student)
     {
-        throw new NotImplementedException();
+        _context.Students.Remove(student);
     }
 
     public List<Student> GetAll()
     {
-        throw new NotImplementedException();
+        return _context.Students.ToList();
     }
 
-    public Student GetById(int id)
+    public Student? GetById(int id)
     {
-        throw new NotImplementedException();
+        return _context.Students.Find(id);
     }
 
     public void Update(Student student)
     {
-        throw new NotImplementedException();
+        _context.Students.Update(student);
     }
 }
