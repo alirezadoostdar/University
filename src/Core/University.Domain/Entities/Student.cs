@@ -7,6 +7,9 @@ public class Student
     public string Family { get; set; }
     public DateTime BirthDate { get; set; }
     public int StudentCode { get; set; }
+    public string IdentityCode { get; set; }
     public string PhoneNumber { get; set; }
     public string Address { get; set; }
+
+    public ICollection<ClassEnrollment> Classes { get; set; }
 }
