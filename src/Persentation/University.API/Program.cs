@@ -4,6 +4,7 @@ using University.Application.Students;
 using University.Domain.Interfaces;
 using System.Data;
 using Microsoft.EntityFrameworkCore;
+using University.Application;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +21,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(option =>
 
 builder.Services.AddScoped<IStudentRepository, EfStudentRepository>();
 
+builder.Services.AddScoped<IUnitOfWork, EfUnitOfWork>();
 builder.Services.AddScoped<IStudentService, StudentService>();
 
 var app = builder.Build();
