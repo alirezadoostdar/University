@@ -39,4 +39,10 @@ public class StudentsController : Controller
         _studentService.Update(id, dto);
     }
 
+    [HttpDelete("{id:int}")]
+    public void Delete(int id)
+    {
+        _studentService.Delete(id);
+    }
+
 }

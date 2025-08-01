@@ -41,7 +41,10 @@ public class StudentService : IStudentService
 
     public void Delete(int id)
     {
-        throw new NotImplementedException();
+        var student = _studentRepository.GetById(id);
+        if (student is null)
+            throw new Exception("student not found");
+        _studentRepository.Delete(student);
     }
 
     public List<GetStudentDto> GetAll()
