@@ -10,6 +10,12 @@ public class ApplicationDbContext : DbContext
 
     }
 
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly );
+    }
+
     public DbSet<Student> Students{ get; set; }
     public DbSet<Teacher> Teachers{ get; set; }
 }

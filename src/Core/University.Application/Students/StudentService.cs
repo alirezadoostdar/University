@@ -35,8 +35,8 @@ public class StudentService : IStudentService
 
     private int GenerateStudentCode()
     {
-        string timePart = DateTime.Now.ToString("yyyyMMddHHmmss");
-        return int.Parse(timePart.Substring(2));
+        string timePart = DateTime.Now.ToString("yyyyMMmmss");
+        return Convert.ToInt32(timePart);
     }
 
     public void Delete(int id)
@@ -46,16 +46,46 @@ public class StudentService : IStudentService
 
     public List<GetStudentDto> GetAll()
     {
-        throw new NotImplementedException();
+        var list = _studentRepository.GetAll().Select(x => new GetStudentDto(
+            x.Id,
+            x.Name,
+            x.Family,
+            x.BirthDate,
+            x.StudentCode,
+            x.IdentityCode,
+            x.PhoneNumber,
+            x.Address)).ToList();
+        return list;
     }
 
     public GetStudentDto GetById(int id)
     {
-        throw new NotImplementedException();
+        var student = _studentRepository.GetById(id);
+        var StudentDto = new GetStudentDto(
+            student.Id,
+            student.Name,
+            student.Family,
+            student.BirthDate,
+            student.StudentCode,
+            student.IdentityCode,
+            student.PhoneNumber,
+            student.Address);
+
+        return StudentDto;
     }
 
-    public void Update(UpdateStudentDto dto)
+    public void Update(int id,UpdateStudentDto dto)
     {
-        throw new NotImplementedException();
+        var student = _studentRepository.GetById(id);
+
+        student.Name = dto.Name;
+        student.Family = dto.Family;
+        student.BirthDate = dto.BirthDate;
+        student.StudentCode = dto.StudentCode;
+        student.IdentityCode = dto.IdentityCode;
+        student.PhoneNumber = dto.PhoneNumber;
+        student.Address = dto.Address;
+        _studentRepository.Update(student);
+        _uow.Save();
     }
 }

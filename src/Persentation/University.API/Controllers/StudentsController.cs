@@ -15,14 +15,28 @@ public class StudentsController : Controller
         _studentService = studentService;
     }
 
+    [HttpGet("{id:int}")]
+    public GetStudentDto GetById(int id)
+    {
+        return _studentService.GetById(id);
+    }
+
+    [HttpGet]
+    public List<GetStudentDto> GetAll()
+    {
+        return _studentService.GetAll();
+    }
+
     [HttpPost]
     public int Add(AddStudentDto dto)
     {
-        return _studentService.Add(dto);
+        return  _studentService.Add(dto);
     }
 
-    public IActionResult Index()
+    [HttpPut("{id:int}")]
+    public void Update(int id, UpdateStudentDto dto)
     {
-        return View();
+        _studentService.Update(id, dto);
     }
+
 }

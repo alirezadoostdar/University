@@ -2,7 +2,6 @@
 
 public record UpdateStudentDto
 (
-    int Id,
     string Name,
     string Family,
     DateTime BirthDate,

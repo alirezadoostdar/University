@@ -1,6 +1,4 @@
-﻿
-
-using FluentMigrator;
+﻿using FluentMigrator;
 using FluentMigrator.Builders.Create;
 
 namespace University.Migrations;
@@ -14,7 +12,7 @@ public class _202507290959_Add_Initial : Migration
             .WithColumn("Id").AsInt32().PrimaryKey().Identity()
             .WithColumn("Name").AsString(50).NotNullable()
             .WithColumn("Family").AsString(100).NotNullable()
-            .WithColumn("BirtDate").AsDate().NotNullable()
+            .WithColumn("BirthDate").AsDate().NotNullable()
             .WithColumn("StudentCode").AsInt32().NotNullable().Unique()
             .WithColumn("IdentityCode").AsString(10).NotNullable().Unique()
             .WithColumn("PhoneNumber").AsString(20).NotNullable().Unique()
@@ -53,9 +51,13 @@ public class _202507290959_Add_Initial : Migration
             .WithColumn("Room").AsString(20).NotNullable();
 
         Create.Table("ClassEnrollments")
-            .WithColumn("Id").AsInt32().PrimaryKey().Identity()
             .WithColumn("ClassId").AsInt32().NotNullable()
-            .WithColumn("StudentId").AsInt32().NotNullable();
+            .WithColumn("StudentId").AsInt32().NotNullable()
+            .WithColumn("RegisterDate").AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentDateTime);
+
+        Create.PrimaryKey("PK_ClassEnrollments")
+            .OnTable("ClassEnrollments")
+            .Columns("StudentId", "ClassId");
 
         Create.ForeignKey("Fk_Class_Course")
             .FromTable("Classes")

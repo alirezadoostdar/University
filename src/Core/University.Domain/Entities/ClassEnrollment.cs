@@ -9,4 +9,6 @@ public class ClassEnrollment
 
     public int StudentId { get; set; }
     public Student Student { get; set; }
+
+    public DateTime RegisterDate { get; set; }
 }
