@@ -11,6 +11,8 @@ using University.Application.Semesters.Contracts;
 using University.Application.Semesters;
 using University.Application.Teachers.Contracts;
 using University.Application.Teachers;
+using University.Application.Courses.Contracts;
+using University.Application.Courses;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,10 +30,12 @@ builder.Services.AddDbContext<ApplicationDbContext>(option =>
 builder.Services.AddScoped<IStudentRepository, EfStudentRepository>();
 builder.Services.AddScoped<ISemesterRepository, EfSemesterRepository>();
 builder.Services.AddScoped<ITeacherRepository, EfTeacherRepository>();
+builder.Services.AddScoped<ICourseRepository, EfCourseRepository>();
 
 builder.Services.AddScoped<IUnitOfWork, EfUnitOfWork>();
 builder.Services.AddScoped<IStudentService, StudentService>();
 builder.Services.AddScoped<ITeacherService, TeacherService>();
+builder.Services.AddScoped<ICourseService, CourseService>();
 
 var app = builder.Build();
 
