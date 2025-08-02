@@ -1,4 +1,5 @@
 ﻿using University.Application.Students.Contracts.Dtos;
+using University.Application.Students.Contracts.Exceptions;
 using University.Domain.Entities;
 using University.Domain.Interfaces;
 
@@ -43,7 +44,8 @@ public class StudentService : IStudentService
     {
         var student = _studentRepository.GetById(id);
         if (student is null)
-            throw new Exception("student not found");
+            throw new StudentNotFoundException();
+
         _studentRepository.Delete(student);
     }
 
@@ -64,6 +66,9 @@ public class StudentService : IStudentService
     public GetStudentDto GetById(int id)
     {
         var student = _studentRepository.GetById(id);
+        if (student is null)
+            throw new StudentNotFoundException();
+
         var StudentDto = new GetStudentDto(
             student.Id,
             student.Name,

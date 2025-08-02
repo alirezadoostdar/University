@@ -5,6 +5,10 @@ using University.Domain.Interfaces;
 using System.Data;
 using Microsoft.EntityFrameworkCore;
 using University.Application;
+using Microsoft.AspNetCore.Diagnostics;
+using University.Domain.Abstractions;
+using University.Application.Semesters.Contracts;
+using University.Application.Semesters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,9 +24,11 @@ builder.Services.AddDbContext<ApplicationDbContext>(option =>
 });
 
 builder.Services.AddScoped<IStudentRepository, EfStudentRepository>();
+builder.Services.AddScoped<ISemesterRepository, EfSemesterRepository>();
 
 builder.Services.AddScoped<IUnitOfWork, EfUnitOfWork>();
 builder.Services.AddScoped<IStudentService, StudentService>();
+builder.Services.AddScoped<ISemesterService, SemesterService>();
 
 var app = builder.Build();
 
@@ -31,7 +37,24 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+
+    app.UseExceptionHandler(async ex =>
+    {
+        ex.Run(async context =>
+        {
+            var exeption = context.Features.Get<IExceptionHandlerPathFeature>();
+
+            if (exeption.Error is BusinessException)
+            {
+                var exTitle = exeption.Error.GetType().Name
+                .ToString().Replace("Exception", "");
+                await context.Response.WriteAsync(exTitle);
+            }
+        });
+    });
 }
+
+
 
 app.UseHttpsRedirection();
 
