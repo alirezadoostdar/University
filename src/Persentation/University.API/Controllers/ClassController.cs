@@ -37,4 +37,10 @@ public class ClassController : Controller
     {
         _classService.Update(id, dto);
     }
+
+    [HttpDelete("{id:int}")]
+    public void Delete(int id)
+    {
+        _classService.Delete(id);
+    }
 }

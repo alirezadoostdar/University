@@ -11,18 +11,23 @@ public class ClassConfig : IEntityTypeConfiguration<Class>
     {
         builder.ToTable("Classes");
 
-        builder.HasKey(c => c.Id);
+        builder.HasKey(c => c.Id)
+            .HasName("Id");
 
         builder.Property(c => c.CourseId)
+            .HasColumnName("CourseId")
             .IsRequired();
 
         builder.Property(c => c.TeacherId)
+            .HasColumnName("TeacherId")
             .IsRequired();
 
         builder.Property(c => c.SemesterId)
+            .HasColumnName("SemesterId")
             .IsRequired();
 
         builder.Property(c => c.Capacity)
+            .HasColumnName("Capacity")
             .IsRequired();
 
         builder.HasOne(c => c.Course)
