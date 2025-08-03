@@ -13,6 +13,8 @@ using University.Application.Teachers.Contracts;
 using University.Application.Teachers;
 using University.Application.Courses.Contracts;
 using University.Application.Courses;
+using University.Application.Classes.Contracts;
+using University.Application.Classes;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,11 +33,13 @@ builder.Services.AddScoped<IStudentRepository, EfStudentRepository>();
 builder.Services.AddScoped<ISemesterRepository, EfSemesterRepository>();
 builder.Services.AddScoped<ITeacherRepository, EfTeacherRepository>();
 builder.Services.AddScoped<ICourseRepository, EfCourseRepository>();
+builder.Services.AddScoped<IClassRepository, EfClassRepository>();
 
 builder.Services.AddScoped<IUnitOfWork, EfUnitOfWork>();
 builder.Services.AddScoped<IStudentService, StudentService>();
 builder.Services.AddScoped<ITeacherService, TeacherService>();
 builder.Services.AddScoped<ICourseService, CourseService>();
+builder.Services.AddScoped<IClassService, ClassService>();
 
 var app = builder.Build();
 

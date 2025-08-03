@@ -10,5 +10,5 @@ public class ClassSchedule
     public byte DayOfWeek { get; set; }
     public TimeOnly Start { get; set; }
     public TimeOnly End { get; set; }
-    public byte Room { get; set; }
+    public string Room { get; set; }
 }
