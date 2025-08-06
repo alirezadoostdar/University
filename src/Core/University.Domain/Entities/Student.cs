@@ -2,5 +2,5 @@
 
 public class Student : Person
 {
-    public ICollection<ClassEnrollment> Classes { get; set; }
+    public ICollection<ClassEnrollment> ClassEnrollments { get; set; } = [];
 }

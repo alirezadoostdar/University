@@ -8,7 +8,7 @@ public class ClassEnrollmentConfig : IEntityTypeConfiguration<ClassEnrollment>
 {
     public void Configure(EntityTypeBuilder<ClassEnrollment> builder)
     {
-        builder.ToTable("ClassEnrollments");
+        builder.ToTable("StudentsClasses");
 
         builder.HasKey(e => new { e.ClassId, e.StudentId });
 
@@ -19,6 +19,14 @@ public class ClassEnrollmentConfig : IEntityTypeConfiguration<ClassEnrollment>
         builder.Property(e => e.StudentId)
             .HasColumnName("StudentId")
             .IsRequired();
+
+        builder.HasOne(e => e.Student)
+            .WithMany(e => e.ClassEnrollments)
+            .HasForeignKey(e => e.StudentId);
+
+        builder.HasOne(e => e.Class)
+            .WithMany(e => e.ClassEnrollments)
+            .HasForeignKey(_ => _.ClassId);
 
 
     }

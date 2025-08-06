@@ -15,4 +15,6 @@ public class Class
     public byte Capacity { get; set; }
 
     public HashSet<ClassSchedule> Schedules { get; set; } = new();
+
+    public ICollection<ClassEnrollment> ClassEnrollments { get; set; } = [];
 }
