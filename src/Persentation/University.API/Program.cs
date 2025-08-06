@@ -37,6 +37,7 @@ builder.Services.AddScoped<IClassRepository, EfClassRepository>();
 
 builder.Services.AddScoped<IUnitOfWork, EfUnitOfWork>();
 builder.Services.AddScoped<IStudentService, StudentService>();
+builder.Services.AddScoped<ISemesterService, SemesterService>();
 builder.Services.AddScoped<ITeacherService, TeacherService>();
 builder.Services.AddScoped<ICourseService, CourseService>();
 builder.Services.AddScoped<IClassService, ClassService>();
