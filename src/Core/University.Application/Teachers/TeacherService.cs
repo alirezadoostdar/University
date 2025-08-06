@@ -21,13 +21,29 @@ public class TeacherService : ITeacherService
     {
         var teacher = new Teacher
         {
-            Name = dto.Name,
-            Family = dto.Family
+            FirstName = dto.Name,
+            LastName = dto.Family,
+            FatherName = dto.FatherName,
+            BirthDate = dto.BirthDate,
+            Code = GenerateStudentCode(),
+            Gender = (Gender)dto.Gender,
+            NationalCode = dto.IdentityCode,
+            ContactInfo = new ContactInfo
+            {
+                PhoneNumber = dto.PhoneNumber,
+                Address = dto.Address
+            }
         };
 
         _teacherRepository.Add(teacher);
         _uow.Save();
         return teacher.Id;
+    }
+
+    private int GenerateStudentCode()
+    {
+        string timePart = DateTime.Now.ToString("yyyyMMmmss");
+        return Convert.ToInt32(timePart);
     }
 
     public void Delete(int id)
@@ -45,8 +61,8 @@ public class TeacherService : ITeacherService
         var list = _teacherRepository.GetAll()
             .Select(x => new GetTeacherDto(
                 x.Id,
-                x.Name,
-                x.Family)).ToList();
+                x.FirstName,
+                x.LastName)).ToList();
 
         return list;
     }
@@ -57,7 +73,7 @@ public class TeacherService : ITeacherService
         if(teacher is null)
             throw new TeacherNotFoundException();
 
-        var dto = new GetTeacherDto(teacher.Id, teacher.Name, teacher.Family);
+        var dto = new GetTeacherDto(teacher.Id, teacher.FirstName, teacher.LastName);
         return dto;
     }
 
@@ -67,8 +83,8 @@ public class TeacherService : ITeacherService
         if( teacher is null)
             throw new TeacherNotFoundException();
 
-        teacher.Name = dto.Name;
-        teacher.Family = dto.Family;
+        teacher.FirstName = dto.Name;
+        teacher.LastName = dto.Family;
         _teacherRepository.Update(teacher);
         _uow.Save();
     }

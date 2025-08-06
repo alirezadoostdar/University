@@ -29,23 +29,10 @@ public class ClassEnrollmentService : IClassEnrollmentService
         _uow.Save();
     }
 
-    public void Delete(int id)
+    public void Delete(DeleteClassEnrollmentDto dto)
     {
         throw new NotImplementedException();
     }
 
-    public List<GetClassEnrollmentDto> GetAll()
-    {
-        throw new NotImplementedException();
-    }
 
-    public GetClassEnrollmentDto GetById(int id)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void Update(UpdateClassEnrollmentDto dto)
-    {
-        throw new NotImplementedException();
-    }
 }

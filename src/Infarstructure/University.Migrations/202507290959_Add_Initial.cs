@@ -1,5 +1,6 @@
 ﻿using FluentMigrator;
 using FluentMigrator.Builders.Create;
+using System.Reflection;
 
 namespace University.Migrations;
 
@@ -8,41 +9,39 @@ public class _202507290959_Add_Initial : Migration
 {
     public override void Up()
     {
-        Create.Table("Students")
+        Create.Table("Persons")
             .WithColumn("Id").AsInt32().PrimaryKey().Identity()
             .WithColumn("Name").AsString(50).NotNullable()
             .WithColumn("Family").AsString(100).NotNullable()
+            .WithColumn("Code").AsInt32().NotNullable().Unique()
             .WithColumn("BirthDate").AsDate().NotNullable()
-            .WithColumn("StudentCode").AsInt32().NotNullable().Unique()
-            .WithColumn("IdentityCode").AsString(10).NotNullable().Unique()
+            .WithColumn("NationalCode").AsString(10).NotNullable().Unique()
+            .WithColumn("FatherName").AsString(100).NotNullable()
+            .WithColumn("Gender").AsByte().NotNullable()
+            .WithColumn("Type").AsByte().NotNullable()
             .WithColumn("PhoneNumber").AsString(20).NotNullable().Unique()
             .WithColumn("Address").AsString(200);
-
-        Create.Table("Teachers")
-            .WithColumn("Id").AsInt32().PrimaryKey().Identity()
-            .WithColumn("Name").AsString(50).NotNullable()
-            .WithColumn("Family").AsString(50).NotNullable();
 
         Create.Table("Courses")
             .WithColumn("Id").AsInt32().PrimaryKey().Identity()
             .WithColumn("Title").AsString(100).NotNullable().Unique()
             .WithColumn("Unit").AsByte().NotNullable();
 
-        Create.Table("Semesters")
+        Create.Table("Terms")
             .WithColumn("Id").AsInt32().PrimaryKey().Identity()
             .WithColumn("Title").AsString(100).NotNullable()
             .WithColumn("StartDate").AsDateTime().NotNullable()
             .WithColumn("EndDate").AsDateTime().NotNullable()
-            .WithColumn("Active").AsBoolean().NotNullable();
+            .WithColumn("IsActive").AsBoolean().NotNullable();
 
         Create.Table("Classes")
             .WithColumn("Id").AsInt32().PrimaryKey().Identity()
             .WithColumn("CourseId").AsInt32().NotNullable()
             .WithColumn("TeacherId").AsInt32().NotNullable()
-            .WithColumn("SemesterId").AsInt32().NotNullable()
+            .WithColumn("TermId").AsInt32().NotNullable()
             .WithColumn("Capacity").AsByte().NotNullable();
 
-        Create.Table("ClassSchedules")
+        Create.Table("Sections")
             .WithColumn("Id").AsInt32().PrimaryKey().Identity()
             .WithColumn("ClassId").AsInt32().NotNullable()
             .WithColumn("DayOfWeek").AsByte().NotNullable()
@@ -50,13 +49,13 @@ public class _202507290959_Add_Initial : Migration
             .WithColumn("End").AsTime().NotNullable()
             .WithColumn("Room").AsString(20).NotNullable();
 
-        Create.Table("ClassEnrollments")
+        Create.Table("StudentsClasses")
             .WithColumn("ClassId").AsInt32().NotNullable()
             .WithColumn("StudentId").AsInt32().NotNullable()
             .WithColumn("RegisterDate").AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentDateTime);
 
-        Create.PrimaryKey("PK_ClassEnrollments")
-            .OnTable("ClassEnrollments")
+        Create.PrimaryKey("PK_StudentClass")
+            .OnTable("StudentsClasses")
             .Columns("StudentId", "ClassId");
 
         Create.ForeignKey("Fk_Class_Course")
@@ -65,34 +64,34 @@ public class _202507290959_Add_Initial : Migration
             .ToTable("Courses")
             .PrimaryColumn("Id");
 
-        Create.ForeignKey("Fk_Class_Teacher")
+        Create.ForeignKey("Fk_Class_Person")
             .FromTable("Classes")
             .ForeignColumn("TeacherId")
-            .ToTable("Teachers")
+            .ToTable("Persons")
             .PrimaryColumn("Id");
 
-        Create.ForeignKey("Fk_Class_Semester")
+        Create.ForeignKey("Fk_Class_Term")
             .FromTable("Classes")
-            .ForeignColumn("SemesterId")
-            .ToTable("Semesters")
+            .ForeignColumn("TermId")
+            .ToTable("Terms")
             .PrimaryColumn("Id");
 
-        Create.ForeignKey("Fk_ClassSchedule_Class")
-            .FromTable("ClassSchedules")
+        Create.ForeignKey("Fk_Section_Class")
+            .FromTable("Sections")
             .ForeignColumn("ClassId")
             .ToTable("Classes")
             .PrimaryColumn("Id");
 
-        Create.ForeignKey("Fk_ClassEnrollment_Class")
-            .FromTable("ClassEnrollments")
+        Create.ForeignKey("Fk_StudentsClasses_Class")
+            .FromTable("StudentsClasses")
             .ForeignColumn("ClassId")
             .ToTable("Classes")
             .PrimaryColumn("Id");
 
-        Create.ForeignKey("Fk_ClassEnrollment_Student")
-            .FromTable("ClassEnrollments")
+        Create.ForeignKey("Fk_StudentsClasses_Person")
+            .FromTable("StudentsClasses")
             .ForeignColumn("StudentId")
-            .ToTable("Students")
+            .ToTable("Persons")
             .PrimaryColumn("Id");
 
     }

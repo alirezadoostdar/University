@@ -20,13 +20,17 @@ public class StudentService : IStudentService
     {
         var student = new Student
         {
-            Name = dto.Name,
-            Family = dto.Family,
+            FirstName = dto.Name,
+            LastName = dto.Family,
             BirthDate = dto.BirthDate,
-            PhoneNumber = dto.PhoneNumber,
-            Address = dto.Address,
-            IdentityCode = dto.IdentityCode,
-            StudentCode = GenerateStudentCode()
+            ContactInfo = new ContactInfo
+            {
+                Address = dto.Address,
+                PhoneNumber = dto.PhoneNumber
+            },
+            FatherName = dto.FatherName,
+            NationalCode = dto.IdentityCode,
+            Code = GenerateStudentCode(),
         };
 
         _studentRepository.Add(student);
@@ -53,13 +57,14 @@ public class StudentService : IStudentService
     {
         var list = _studentRepository.GetAll().Select(x => new GetStudentDto(
             x.Id,
-            x.Name,
-            x.Family,
+            x.FirstName,
+            x.LastName,
             x.BirthDate,
-            x.StudentCode,
-            x.IdentityCode,
-            x.PhoneNumber,
-            x.Address)).ToList();
+            x.Code,
+            x.NationalCode,
+            x.ContactInfo.PhoneNumber,
+            x.ContactInfo.Address)).ToList();
+
         return list;
     }
 
@@ -70,14 +75,14 @@ public class StudentService : IStudentService
             throw new StudentNotFoundException();
 
         var StudentDto = new GetStudentDto(
-            student.Id,
-            student.Name,
-            student.Family,
-            student.BirthDate,
-            student.StudentCode,
-            student.IdentityCode,
-            student.PhoneNumber,
-            student.Address);
+           student.Id,
+           student.FirstName,
+           student.LastName,
+           student.BirthDate,
+           student.Code,
+           student.NationalCode,
+           student.ContactInfo.PhoneNumber,
+           student.ContactInfo.Address);
 
         return StudentDto;
     }
@@ -86,13 +91,13 @@ public class StudentService : IStudentService
     {
         var student = _studentRepository.GetById(id);
 
-        student.Name = dto.Name;
-        student.Family = dto.Family;
+        student.FirstName = dto.Name;
+        student.LastName = dto.Family;
         student.BirthDate = dto.BirthDate;
-        student.StudentCode = dto.StudentCode;
-        student.IdentityCode = dto.IdentityCode;
-        student.PhoneNumber = dto.PhoneNumber;
-        student.Address = dto.Address;
+        student.Code = dto.StudentCode;
+        student.NationalCode = dto.IdentityCode;
+        student.ContactInfo.PhoneNumber = dto.PhoneNumber;
+        student.ContactInfo.Address = dto.Address;
         _studentRepository.Update(student);
         _uow.Save();
     }
