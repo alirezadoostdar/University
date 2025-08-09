@@ -23,7 +23,7 @@ public class ClassConfig : IEntityTypeConfiguration<Class>
             .IsRequired();
 
         builder.Property(c => c.SemesterId)
-            .HasColumnName("SemesterId")
+            .HasColumnName("TermId")
             .IsRequired();
 
         builder.Property(c => c.Capacity)

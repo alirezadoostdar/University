@@ -5,6 +5,7 @@ public record GetStudentDto
     int Id,
     string Name,
     string Family,
+    string FatherName,
     DateTime BirthDate,
     int StudentCode,
     string IdentityCode,

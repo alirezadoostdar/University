@@ -4,6 +4,7 @@ public record UpdateStudentDto
 (
     string Name,
     string Family,
+    string FatherName,
     DateTime BirthDate,
     int StudentCode,
     string IdentityCode,

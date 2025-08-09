@@ -51,6 +51,7 @@ public class StudentService : IStudentService
             throw new StudentNotFoundException();
 
         _studentRepository.Delete(student);
+        _uow.Save();
     }
 
     public List<GetStudentDto> GetAll()
@@ -59,6 +60,7 @@ public class StudentService : IStudentService
             x.Id,
             x.FirstName,
             x.LastName,
+            x.FatherName,
             x.BirthDate,
             x.Code,
             x.NationalCode,
@@ -78,6 +80,7 @@ public class StudentService : IStudentService
            student.Id,
            student.FirstName,
            student.LastName,
+           student.FatherName,
            student.BirthDate,
            student.Code,
            student.NationalCode,
@@ -90,9 +93,12 @@ public class StudentService : IStudentService
     public void Update(int id,UpdateStudentDto dto)
     {
         var student = _studentRepository.GetById(id);
+        if (student is null)
+            throw new StudentNotFoundException();
 
         student.FirstName = dto.Name;
         student.LastName = dto.Family;
+        student.FatherName = dto.FatherName;
         student.BirthDate = dto.BirthDate;
         student.Code = dto.StudentCode;
         student.NationalCode = dto.IdentityCode;
